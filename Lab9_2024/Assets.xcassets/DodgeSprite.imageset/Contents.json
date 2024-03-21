@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "run.png",
+      "filename" : "v.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "run 1.png",
+      "filename" : "v 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "run 2.png",
+      "filename" : "v 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
