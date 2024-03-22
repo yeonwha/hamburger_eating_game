@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		76D1EE7C2BAE3D1900378FBF /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D3FE12BA2170E004151C2 /* GameScene.swift */; };
+		76D1EE7D2BAE3D1900378FBF /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D3FE12BA2170E004151C2 /* GameScene.swift */; };
 		F32D3FDC2BA2170E004151C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D3FDB2BA2170E004151C2 /* AppDelegate.swift */; };
 		F32D3FDE2BA2170E004151C2 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F32D3FDD2BA2170E004151C2 /* GameScene.sks */; };
 		F32D3FE22BA2170E004151C2 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D3FE12BA2170E004151C2 /* GameScene.swift */; };
@@ -270,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76D1EE7C2BAE3D1900378FBF /* GameScene.swift in Sources */,
 				F32D3FF62BA21710004151C2 /* Lab9_2024Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76D1EE7D2BAE3D1900378FBF /* GameScene.swift in Sources */,
 				F32D40022BA21710004151C2 /* Lab9_2024UITestsLaunchTests.swift in Sources */,
 				F32D40002BA21710004151C2 /* Lab9_2024UITests.swift in Sources */,
 			);

@@ -9,6 +9,8 @@ import SpriteKit
 import GameplayKit
 
 let gameOver: Int = -1
+let floorY = 0
+let spriteY = 100
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     var hitNum: Int = 0
@@ -18,7 +20,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var sprite : SKSpriteNode!
     var opponentSprite: SKSpriteNode!
-    var hitSprite : SKSpriteNode!
+    var yumSprite : SKSpriteNode!
     
     let spriteCategory1 : UInt32 = 0b1
     let spriteCategory2 : UInt32 = 0b10
@@ -30,11 +32,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /// player's sprite
         sprite = SKSpriteNode(imageNamed: "PlayerSprite")
         sprite.size = CGSize(width: 170, height: 170)
-        sprite.position = CGPoint(x: size.width / 2, y: sprite.size.height)
+        sprite.position = CGPoint(x: Int(size.width) / 2, y: spriteY)
         
         sprite.physicsBody = SKPhysicsBody(circleOfRadius: 50)
-        sprite.physicsBody?.restitution = 0.2
-        sprite.physicsBody?.isDynamic = false
         
         sprite.physicsBody?.categoryBitMask = spriteCategory1
         sprite.physicsBody?.contactTestBitMask = spriteCategory1
@@ -48,8 +48,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         opponentSprite.position = CGPoint(x: size.width / 2, y: size.height)
         
         opponentSprite.physicsBody = SKPhysicsBody(circleOfRadius: 50)
-        opponentSprite.physicsBody?.restitution = 0.8
-        
         
         opponentSprite.physicsBody?.categoryBitMask = spriteCategory1
         opponentSprite.physicsBody?.contactTestBitMask = spriteCategory1
@@ -64,8 +62,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         /// score label setting up
         scoreLabel = SKLabelNode()
-        scoreLabel.text = "You ate \(score) burger(s)"
-        scoreLabel.position = CGPoint(x: size.width / 2, y: size.height / 4)
+        scoreLabel.text = "You got \(score) kcal"
+        scoreLabel.position = CGPoint(x: size.width / 2, y: size.height / 1.5)
         addChild(scoreLabel)
         
         let downMovement = SKAction.move(to: CGPoint(x: size.width / 2, y: 0), duration: 1)
@@ -83,8 +81,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let initialX = Int(opponentSprite.position.x)
         //let randomY = GKRandomSource.sharedRandom().nextInt(upperBound: Int(size.height))
         let topY = Int(size.height)
-        let floorY = 0
-        
         let movementDown = SKAction.move(to: CGPoint(x: initialX, y: floorY ), duration: 1.5)
         let movementUp = SKAction.move(to: CGPoint(x: randomX, y: topY ), duration: 0)
         
@@ -92,9 +88,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let movement = SKAction.sequence([movementDown, movementUp])
         opponentSprite.run(movement, completion: { [unowned self] in
             self.moveOpponent()
-            if opponentSprite.position.y < sprite.size.height{
-                score -= 0
-                scoreLabel.text = "You ate \(score) burger(s)"
+            //if opponentSprite.position.y < sprite.size.height{
+            score -= 1
+            if score > gameOver {
+                scoreLabel.text = "You got \(score) kcal"
+            }
+            else {
+                scoreLabel.text = "You died of starvation"
             }
         })
     }
@@ -102,28 +102,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         print("Hit!")
         
-//        hitSprite = SKSpriteNode(imageNamed: "HitSprite")
-//        hitSprite.size = CGSize(width: 170, height: 170)
-//        hitSprite.position = sprite.position
-//        addChild(hitSprite)
-//        let duration = SKAction.duration(2.0,)
+        yumSprite = SKSpriteNode(imageNamed: "YumSprite")
+        yumSprite.size = CGSize(width: 170, height: 170)
+        yumSprite.position = sprite.position
+        addChild(yumSprite)
+        let temp = SKAction.move(to: yumSprite.position, duration: 0.2)
+        yumSprite.run(temp)
         
 //        hitNum += 1
 //        label.text = "\(hitNum)"
+        let backX = Int(opponentSprite.position.x)
+        let topY = Int(size.height)
+        
+        opponentSprite.removeAllActions()
+        let react = SKAction.move(to: CGPoint(x: backX, y: topY), duration: 1.5)
+        opponentSprite.run(react)
+        moveOpponent()
         
         score += 1
-        scoreLabel.text = "You ate \(score) burger(s)"
+        scoreLabel.text = "You got \(score) kcal"
     }
     
     func touchDown(atPoint pos : CGPoint) {
-        sprite.run(SKAction.move(to: pos, duration: 1))
+        let newPos: CGPoint = CGPoint(x: Int(pos.x), y: spriteY)
+        sprite.run(SKAction.move(to: newPos, duration: 0.5))
     }
     
     func touchMoved(toPoint pos : CGPoint) {
     }
     
     func touchUp(atPoint pos : CGPoint) {
-        sprite.run(SKAction.move(to: pos, duration: 1))
+        //sprite.run(SKAction.move(to: pos, duration: 1))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
