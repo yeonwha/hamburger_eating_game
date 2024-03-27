@@ -122,7 +122,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(yumSprite)
         
         let temp = SKAction.move(to: sprite.position, duration: 0.2)
-        yumSprite.run(temp, completion: {self.yumSprite.removeFromParent()
+        yumSprite.run(temp, completion: {[unowned self] in self.yumSprite.removeFromParent()
             self.addChild(self.sprite)}
         )
         //addChild(sprite)
@@ -133,7 +133,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         opponentSprite.removeAllActions()
         let react = SKAction.move(to: CGPoint(x: randomX, y: topY), duration: 1.5)
-        opponentSprite.run(react, completion: {self.moveOpponent()})
+        opponentSprite.run(react, completion: {[unowned self] in self.moveOpponent()})
         
         score += 1
         scoreLabel.text = "You've got \(score) kcal"
