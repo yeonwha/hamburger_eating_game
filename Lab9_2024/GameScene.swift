@@ -68,7 +68,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         moveOpponent()
     }
-    
+
+    // function to make hamburger sprite fall from top,
+    // and handle score when it hits player's sprite or misses
     func moveOpponent(){
         let randomX = GKRandomSource.sharedRandom().nextInt(upperBound: Int(size.width))
         let initialX = Int(opponentSprite.position.x)
@@ -110,7 +112,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         // change player's sprite when hit the hamburger sprite (opponentSprite)
         // update score adding 1 and label to show the current score
-        // hit back hamburger sprite to the top
         sprite.removeFromParent()
                 
         yumSprite = SKSpriteNode(imageNamed: "YumSprite")
@@ -122,9 +123,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         yumSprite.run(temp, completion: {[unowned self] in self.yumSprite.removeFromParent()
             self.addChild(self.sprite)}
         )
-        //addChild(sprite)
 
-        //let backX = Int(opponentSprite.position.x)
         let randomX = GKRandomSource.sharedRandom().nextInt(upperBound: Int(size.width))
         let topY = Int(size.height)
         
