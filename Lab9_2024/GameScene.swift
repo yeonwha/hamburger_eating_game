@@ -26,11 +26,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let spriteCategory1 : UInt32 = 0b1
     let spriteCategory2 : UInt32 = 0b10
     
-//    private var label : SKLabelNode?
-//    private var spinnyNode : SKShapeNode?
-    
     override func didMove(to view: SKView) {
-        /// player's sprite
+        /// adjust player's sprite's position in the middle of the screen
         sprite = SKSpriteNode(imageNamed: "PlayerSprite")
         sprite.size = CGSize(width: 170, height: 170)
         sprite.position = CGPoint(x: Int(size.width) / 2, y: spriteY)
@@ -43,7 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(sprite)  // add it to the scene
         
-        /// sprite attacking player
+        /// hamburger sprite (OpponentSprite) attacking player
         opponentSprite = SKSpriteNode(imageNamed: "OpponentSprite")
         opponentSprite.size = CGSize(width: 130, height: 130)
         opponentSprite.position = CGPoint(x: size.width / 2, y: size.height)
@@ -56,12 +53,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(opponentSprite)
         
-//        label = SKLabelNode()
-//        label.text = "\(hitNum)"
-//        label.position = CGPoint(x: size.width / 2, y: size.height / 2)
-//        addChild(label)
-        
-        /// score label setting up
+        /// score label and its position setting up
         scoreLabel = SKLabelNode()
         scoreLabel.text = "Let's eat"
         scoreLabel.position = CGPoint(x: size.width / 2, y: size.height / 1.5)
@@ -91,14 +83,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.moveOpponent()
             
             score -= 1
+
+            // updating score by adding 1, game over if score is smaller than -1
             if score > gameOver {
                 scoreLabel.text = "You've got \(score) kcal"
             }
             else {
                 scoreLabel.text = "You died of starvation"
                 opponentSprite.removeAllActions()
-                
-                
+
+                // Change player's died sprite
                 hitSprite = SKSpriteNode(imageNamed: "HitSprite")
                 hitSprite.size = CGSize(width: 170, height: 170)
                 hitSprite.position = sprite.position
@@ -113,7 +107,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
         print("Hit!")
-        
+
+        // change player's sprite when hit the hamburger sprite (opponentSprite)
+        // update score adding 1 and label to show the current score
+        // hit back hamburger sprite to the top
         sprite.removeFromParent()
                 
         yumSprite = SKSpriteNode(imageNamed: "YumSprite")
@@ -138,8 +135,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score += 1
         scoreLabel.text = "You've got \(score) kcal"
     }
-    
-    //func remove
     
     func touchDown(atPoint pos : CGPoint) {
         let newPos: CGPoint = CGPoint(x: Int(pos.x), y: spriteY)
