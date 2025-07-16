@@ -15,4 +15,6 @@ This app is a mobile game programmed in Swift using Xcode. It is a ping-pong gam
 - Once the build is done, the app will be automatically running.
 - Touch the screen to move player's sprite, or move mouse to change the sprite's position.
 
+## Demo video
+To see the 10 seconds demo video, please click the below image.
 [![](https://img.youtube.com/vi/SzfStb8fbE8/maxresdefault.jpg)](https://www.youtube.com/watch?v=SzfStb8fbE8)
